@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<tool_dependency>
+    <set_environment version="1.0">
+        <environment_variable name="R_SCRIPTS_PATH" action="set_to">$REPOSITORY_INSTALL_DIR</environment_variable>
+    </set_environment>
+    <package name="R" version="3.1.0">
+        <install version="1.0">
+            <actions>
+                <action type="download_by_url">http://CRAN.R-project.org/src/base/R-3/R-3.1.0.tar.gz</action>
+                <action type="shell_command">./configure --prefix=$INSTALL_DIR --with-x=no</action>
+                <action type="shell_command">make</action>
+                <action type="shell_command">make install</action>
+                <action type="set_environment">
+                    <environment_variable name="PATH" action="prepend_to">$INSTALL_DIR/bin</environment_variable>
+                </action>
+                <action type="shell_command">$INSTALL_DIR/bin/R --no-save &lt;&lt;&lt; "install.packages('getopt', repos='http://cran.r-project.org'); source('http://rnbeads.mpi-inf.mpg.de/install.R')"</action>
+            </actions>
+        </install>
+        <readme>
+				You need a FORTRAN compiler or perhaps f2c in addition to a C compiler to build R.
+        </readme>
+    </package>
+</tool_dependency>

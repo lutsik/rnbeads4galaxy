@@ -1,0 +1,675 @@
+<?xml version="0.9"?>
+<tool id="rnbeads" name="RnBeads" version="0.91">
+  <description>Performs RnBeads analysis for the selected set of </description>
+  <requirements>
+    <requirement type="set_environment" version="1.0">R_SCRIPTS_PATH</requirement>
+    <requirement type="package" version="3.1.0">R</requirement>
+  </requirements>
+  <command interpreter="bash">rnbeads_galaxy_wrapper.sh
+  		--report-dir="$html_file.extra_files_path"
+      	--output-file="$html_file"
+      #if str( $inputDataSelector.dataType ) == "idats"  
+      	--pheno="$inputDataSelector.sampleAnnotations"
+      #end if
+      #if str( $inputDataSelector.dataType ) != "idats"
+      	#pass
+      #else if str( $inputDataSelector.idatSelector.idatSource ) == "history"
+      	--data-type="idatFiles"
+      	#set $idatList=""
+      	#for $input_file in $inputDataSelector.idatSelector.idatSeries:
+    		#set $idatList+=str( $input_file.idatFile )
+    		#set $idatList+=","				
+    	#end for
+    	--idat-files="$idatList"
+      #else:
+      		--data-type="idatDir"
+      		--idat-dir="$inputDataSelector.idatSelector.idatRepo.fields.path"
+      #end if
+      #if str( $inputDataSelector.dataType ) == "gsreport"
+      	--data-type="GS.report"
+      	--gs-report="$inputDataSelector.gsReportFile"
+      #end if
+      #if str( $inputDataSelector.dataType ) == "geo"
+      	--data-type="GEO"
+      	--geo-series=$inputDataSelector.geoSeries
+      #end if
+      #if str( $inputDataSelector.dataType ) == "tables"
+        --data-type="data.files"
+        --pheno="$inputDataSelector.sampleAnnotations"
+      #end if
+      #if str( $inputDataSelector.dataType ) == "tables"
+      	--data-type="data.files"
+      	--pheno="$inputDataSelector.sampleAnnotations"
+      	--betas="$inputDataSelector.betaTable"
+      	--pvals="$inputDataSelector.pvalTable"
+      #end if
+      #if str( $inputDataSelector.dataType ) == "bed"
+        --data-type="bed.dir"
+      	--pheno="$inputDataSelector.sampleAnnotations"
+        #set $bedList=""
+      	#for $input_file in $inputDataSelector.bedSeries:
+    		#set $bedList+=str( $input_file.bedFile )
+    		#set $bedList+=","				
+    	#end for
+    	--bed-files="$bedList"
+      #end if
+      #if str( $options.optionSet ) == "full"
+		#if str( $options.analysisName ) != ""
+			--analysis-name="$options.analysisName" 
+		#end if
+		#if str( $options.logging ) == "True"
+			--logging
+		#end if
+		#if str( $options.email ) != ""
+			--email="$options.email" 
+		#end if
+		#if str( $options.assembly ) != ""
+			--assembly="$options.assembly" 
+		#end if
+		#if str( $options.columnsPairing ) != ""
+			--columns-pairing="$options.columnsPairing" 
+		#end if
+		#if str( $options.analyzeSites ) == "True"
+			--analyze-sites
+		#end if
+		#if str( $options.regionTypes ) != ""
+			--region-types="$options.regionTypes" 
+		#end if
+		#if str( $options.regionAggregation ) != ""
+			--region-aggregation="$options.regionAggregation" 
+		#end if
+		#if str( $options.regionSubsegments ) != ""
+			--region-subsegments="$options.regionSubsegments" 
+		#end if
+		#if str( $options.regionSubsegmentsTypes ) != ""
+			--region-subsegments-types="$options.regionSubsegmentsTypes" 
+		#end if
+		#if str( $options.identifiersColumn ) != ""
+			--identifiers-column="$options.identifiersColumn" 
+		#end if
+		#if str( $options.pointsCategory ) != ""
+			--points-category="$options.pointsCategory" 
+		#end if
+		#if str( $options.colorsCategory ) != ""
+			--colors-category="$options.colorsCategory" 
+		#end if
+		#if str( $options.colorsGradient ) != ""
+			--colors-gradient="$options.colorsGradient" 
+		#end if
+		#if str( $options.minGroupSize ) != ""
+			--min-group-size="$options.minGroupSize" 
+		#end if
+		#if str( $options.maxGroupCount ) != ""
+			--max-group-count="$options.maxGroupCount" 
+		#end if
+		#if str( $options.gzLargeFiles ) == "True"
+			--gz-large-files
+		#end if
+		#if str( $options.strandSpecific ) == "True"
+			--strand-specific
+		#end if
+		#if str( $options.replicateIdColumn ) != ""
+			--replicate-id-column="$options.replicateIdColumn" 
+		#end if
+		#if str( $options.import ) == "True"
+			--import
+		#end if
+		#if str( $options.importDefaultDataType ) != ""
+			--import-default-data-type="$options.importDefaultDataType" 
+		#end if
+		#if str( $options.importTableSeparator ) != ""
+			--import-table-separator="$options.importTableSeparator" 
+		#end if
+		#if str( $options.importBedStyle ) != ""
+			--import-bed-style="$options.importBedStyle" 
+		#end if
+		#if str( $options.importBedColumns ) != ""
+			--import-bed-columns="$options.importBedColumns" 
+		#end if
+		#if str( $options.importBedFrameShift ) != ""
+			--import-bed-frame-shift="$options.importBedFrameShift" 
+		#end if
+		#if str( $options.importBedTest ) == "True"
+			--import-bed-test
+		#end if
+		#if str( $options.importBedTestOnly ) == "True"
+			--import-bed-test-only
+		#end if
+		#if str( $options.importIdatChunkSize ) != ""
+			--import-idat-chunk-size="$options.importIdatChunkSize" 
+		#end if
+		#if str( $options.preprocessing ) == "True"
+			--preprocessing
+		#end if
+		#if str( $options.qc ) == "True"
+			--qc
+		#end if
+		#if str( $options.qcBoxplots ) == "True"
+			--qc-boxplots
+		#end if
+		#if str( $options.qcBarplots ) == "True"
+			--qc-barplots
+		#end if
+		#if str( $options.qcNegativeBoxplot ) == "True"
+			--qc-negative-boxplot
+		#end if
+		#if str( $options.qcSnpHeatmap ) == "True"
+			--qc-snp-heatmap
+		#end if
+		#if str( $options.qcSnpDistances ) == "True"
+			--qc-snp-distances
+		#end if
+		#if str( $options.qcSnpBoxplot ) == "True"
+			--qc-snp-boxplot
+		#end if
+		#if str( $options.qcSnpBarplot ) == "True"
+			--qc-snp-barplot
+		#end if
+		#if str( $options.qcCoveragePlots ) == "True"
+			--qc-coverage-plots
+		#end if
+		#if str( $options.qcCoverageThresholdPlot ) != ""
+			--qc-coverage-threshold-plot="$options.qcCoverageThresholdPlot" 
+		#end if
+		#if str( $options.qcCoverageHistograms ) == "True"
+			--qc-coverage-histograms
+		#end if
+		#if str( $options.qcCoverageViolins ) == "True"
+			--qc-coverage-violins
+		#end if
+		#if str( $options.qcSampleBatchSize ) != ""
+			--qc-sample-batch-size="$options.qcSampleBatchSize" 
+		#end if
+		#if str( $options.normalization ) == "True"
+			--normalization
+		#end if
+		#if str( $options.normalizationMethod ) != ""
+			--normalization-method="$options.normalizationMethod" 
+		#end if
+		#if str( $options.normalizationBackgroundMethod ) != ""
+			--normalization-background-method="$options.normalizationBackgroundMethod" 
+		#end if
+		#if str( $options.normalizationPlotShifts ) == "True"
+			--normalization-plot-shifts
+		#end if
+		#if str( $options.filteringWhitelist ) != ""
+			--filtering-whitelist="$options.filteringWhitelist" 
+		#end if
+		#if str( $options.filteringBlacklist ) != ""
+			--filtering-blacklist="$options.filteringBlacklist" 
+		#end if
+		#if str( $options.filteringContextRemoval ) != ""
+			--filtering-context-removal="$options.filteringContextRemoval" 
+		#end if
+		#if str( $options.filteringSnp ) != ""
+			--filtering-snp="$options.filteringSnp" 
+		#end if
+		#if str( $options.filteringSexChromosomesRemoval ) == "True"
+			--filtering-sex-chromosomes-removal
+		#end if
+		#if str( $options.filteringMissingValueQuantile ) != ""
+			--filtering-missing-value-quantile="$options.filteringMissingValueQuantile" 
+		#end if
+		#if str( $options.filteringCoverageThreshold ) != ""
+			--filtering-coverage-threshold="$options.filteringCoverageThreshold" 
+		#end if
+		#if str( $options.filteringLowCoverageMasking ) == "True"
+			--filtering-low-coverage-masking
+		#end if
+		#if str( $options.filteringHighCoverageOutliers ) == "True"
+			--filtering-high-coverage-outliers
+		#end if
+		#if str( $options.filteringGreedycut ) == "True"
+			--filtering-greedycut
+		#end if
+		#if str( $options.filteringGreedycutPvalueThreshold ) != ""
+			--filtering-greedycut-pvalue-threshold="$options.filteringGreedycutPvalueThreshold" 
+		#end if
+		#if str( $options.filteringGreedycutRcTies ) != ""
+			--filtering-greedycut-rc-ties="$options.filteringGreedycutRcTies" 
+		#end if
+		#if str( $options.filteringDeviationThreshold ) != ""
+			--filtering-deviation-threshold="$options.filteringDeviationThreshold" 
+		#end if
+		#if str( $options.inference ) == "True"
+			--inference
+		#end if
+		#if str( $options.inferenceTargetsSva ) != ""
+			--inference-targets-sva="$options.inferenceTargetsSva" 
+		#end if
+		#if str( $options.inferenceReferenceMethylomeColumn ) != ""
+			--inference-reference-methylome-column="$options.inferenceReferenceMethylomeColumn" 
+		#end if
+		#if str( $options.inferenceMaxCellTypeMarkers ) != ""
+			--inference-max-cell-type-markers="$options.inferenceMaxCellTypeMarkers" 
+		#end if
+		#if str( $options.inferenceTopCellTypeMarkers ) != ""
+			--inference-top-cell-type-markers="$options.inferenceTopCellTypeMarkers" 
+		#end if
+		#if str( $options.inferenceSvaNumMethod ) != ""
+			--inference-sva-num-method="$options.inferenceSvaNumMethod" 
+		#end if
+		#if str( $options.exploratory ) == "True"
+			--exploratory
+		#end if
+		#if str( $options.exploratoryColumns ) != ""
+			--exploratory-columns="$options.exploratoryColumns" 
+		#end if
+		#if str( $options.exploratoryTopDimensions ) != ""
+			--exploratory-top-dimensions="$options.exploratoryTopDimensions" 
+		#end if
+		#if str( $options.exploratoryPrincipalComponents ) != ""
+			--exploratory-principal-components="$options.exploratoryPrincipalComponents" 
+		#end if
+		#if str( $options.exploratoryCorrelationPvalueThreshold ) != ""
+			--exploratory-correlation-pvalue-threshold="$options.exploratoryCorrelationPvalueThreshold" 
+		#end if
+		#if str( $options.exploratoryCorrelationPermutations ) != ""
+			--exploratory-correlation-permutations="$options.exploratoryCorrelationPermutations" 
+		#end if
+		#if str( $options.exploratoryCorrelationQc ) == "True"
+			--exploratory-correlation-qc
+		#end if
+		#if str( $options.exploratoryBetaDistribution ) == "True"
+			--exploratory-beta-distribution
+		#end if
+		#if str( $options.exploratoryIntersample ) == "True"
+			--exploratory-intersample
+		#end if
+		#if str( $options.exploratoryDeviationPlots ) == "True"
+			--exploratory-deviation-plots
+		#end if
+		#if str( $options.exploratoryClustering ) != ""
+			--exploratory-clustering="$options.exploratoryClustering" 
+		#end if
+		#if str( $options.exploratoryClusteringTopSites ) != ""
+			--exploratory-clustering-top-sites="$options.exploratoryClusteringTopSites" 
+		#end if
+		#if str( $options.exploratoryRegionProfiles ) != ""
+			--exploratory-region-profiles="$options.exploratoryRegionProfiles" 
+		#end if
+		#if str( $options.differential ) == "True"
+			--differential
+		#end if
+		#if str( $options.differentialSiteTestMethod ) != ""
+			--differential-site-test-method="$options.differentialSiteTestMethod" 
+		#end if
+		#if str( $options.differentialPermutations ) != ""
+			--differential-permutations="$options.differentialPermutations" 
+		#end if
+		#if str( $options.differentialComparisonColumns ) != ""
+			--differential-comparison-columns="$options.differentialComparisonColumns" 
+		#end if
+		#if str( $options.differentialComparisonColumnsAllPairwise ) != ""
+			--differential-comparison-columns-all-pairwise="$options.differentialComparisonColumnsAllPairwise" 
+		#end if
+		#if str( $options.covariateAdjustmentColumns ) != ""
+			--covariate-adjustment-columns="$options.covariateAdjustmentColumns" 
+		#end if
+		#if str( $options.differentialAdjustmentSva ) == "True"
+			--differential-adjustment-sva
+		#end if
+		#if str( $options.differentialAdjustmentCelltype ) == "True"
+			--differential-adjustment-celltype
+		#end if
+		#if str( $options.differentialEnrichment ) == "True"
+			--differential-enrichment
+		#end if
+		#if str( $options.exportToBed ) == "True"
+			--export-to-bed
+		#end if
+		#if str( $options.exportToTrackhub ) != ""
+			--export-to-trackhub="$options.exportToTrackhub" 
+		#end if
+		#if str( $options.exportToCsv ) == "True"
+			--export-to-csv
+		#end if
+		#if str( $options.exportToEwasher ) == "True"
+			--export-to-ewasher
+		#end if
+		#if str( $options.exportTypes ) != ""
+			--export-types="$options.exportTypes" 
+		#end if
+		#if str( $options.colorsMeth ) != ""
+			--colors-meth="$options.colorsMeth" 
+		#end if
+		#if str( $options.colors3Gradient ) != ""
+			--colors-3-gradient="$options.colors3Gradient" 
+		#end if
+		#if str( $options.loggingMemory ) == "True"
+			--logging-memory
+		#end if
+		#if str( $options.loggingDisk ) == "True"
+			--logging-disk
+		#end if
+		#if str( $options.loggingExitOnError ) == "True"
+			--logging-exit-on-error
+		#end if
+		#if str( $options.distributionSubsample ) != ""
+			--distribution-subsample="$options.distributionSubsample" 
+		#end if
+		#if str( $options.diskDumpBigMatrices ) == "True"
+			--disk-dump-big-matrices
+		#end if
+		#if str( $options.enforceMemoryManagement ) == "True"
+			--enforce-memory-management
+		#end if
+		#if str( $options.enforceDestroyDiskDumps ) == "True"
+			--enforce-destroy-disk-dumps
+		#end if	
+      #end if
+  </command>
+  <inputs>
+    <conditional name="inputDataSelector">
+    	<param name="dataType" type="select" label="Data Type">
+    		<option value="tables">Tabular data</option>
+    		<option value="idats">IDAT files</option>
+    		<option value="gsreport">GenomeStudio report</option>
+    		<option value="geo">Gene Expression Omnibus series</option>		
+    		<option value="bed">BED files</option>
+    	</param>
+    	<when value="tables">
+    		<param name="sampleAnnotations" type="data" format="tabular" label="Sample Annotation File"/>
+    		<param name="betaTable" type="data" format="tabular" label="Table with beta-values"/> 	
+    		<param name="pvalTable" type="data" format="tabular" label="Table with detection p\-values"/>
+    	</when>
+    	<when value="idats">
+    		<param name="sampleAnnotations" type="data" format="tabular" label="Sample Annotation File"/>
+    		<conditional name="idatSelector">
+    			<param name="idatSource" type="select" label="IDAT source">
+    				<option value="history">Select from history</option>
+    				<option value="repo">Repository on the server</option>
+    			</param>
+    			<when value="repo">
+    				<param name="idatRepo" type="select" label="Select an IDAT repository">
+    					<options from_data_table="rnbeads_repos">
+            				<filter type="sort_by" column="2" />
+            				<validator type="no_options" message="No repositories are available" />
+          				</options>
+          			</param>
+    			</when>
+    			<when value="history">
+    				<repeat min="1" name="idatSeries" title="Input IDAT file">
+    					<param name="idatFile" type="data" format="idat" label="IDAT file"/>
+    				</repeat>
+    			</when>
+    		</conditional>
+    	</when>
+    	<when value="gsreport">
+    		<param name="gsReportFile" type="data" format="tabular" label="GenomeStudio report" />
+    	</when>
+    	<when value="geo">
+    		<param name="geoSeries" type="text" label="GEO series" />
+    	</when>
+    	<when value="bed">
+    		<param name="sampleAnnotations" type="data" format="tabular" label="Sample Annotation File" />
+   			<repeat min="1" name="bedSeries" title="Input BED file">
+    			<param name="bedFile" type="data" format="bed" label="BED file"/>
+    		</repeat>
+        </when>
+    </conditional>
+    <conditional name="options">
+    	<param name="optionSet" type="select" label="Options Set">
+    		<option value="default">Default options</option>
+    		<option value="full">Full option set</option>
+    	</param>
+    	<when value="default" />
+    	<when value="full">
+    		<param name="analysisName" type="text"  label="analysis.name, character" value=""/>
+			<param name="logging" type="select" label="logging, logical" value="1">
+				<option value="True">True</option>
+				<option value="False">False</option>
+			</param>
+			<param name="email" type="text"  label="email, character" value=""/>
+			<param name="assembly" type="text"  label="assembly, character" value="hg19"/>
+			<param name="columnsPairing" type="text"  label="columns.pairing, integer vector" value=""/>
+			<param name="analyzeSites" type="select" label="analyze.sites, logical" value="1">
+				<option value="True">True</option>
+				<option value="False">False</option>
+			</param>
+			<param name="regionTypes" type="text"  label="region.types, character vector" value=""/>
+			<param name="regionAggregation" type="text"  label="region.aggregation, character" value="mean"/>
+			<param name="regionSubsegments" type="text"  label="region.subsegments, integer" value="0"/>
+			<param name="regionSubsegmentsTypes" type="text"  label="region.subsegments.types, character vector" value=""/>
+			<param name="identifiersColumn" type="text"  label="identifiers.column, character" value=""/>
+			<param name="pointsCategory" type="text"  label="points.category, integer vector" value="16,17,3,15,4,7,8"/>
+			<param name="colorsCategory" type="text"  label="colors.category, character vector" value="#1B9E77,#D95F02,#7570B3,#E7298A,#66A61E,#E6AB02,#A6761D,#666666"/>
+			<param name="colorsGradient" type="text"  label="colors.gradient, character vector" value="#132B43,#56B1F7"/>
+			<param name="minGroupSize" type="text"  label="min.group.size, integer" value="2"/>
+			<param name="maxGroupCount" type="text"  label="max.group.count, integer" value=""/>
+			<param name="gzLargeFiles" type="select" label="gz.large.files, logical" value="0">
+				<option value="True">True</option>
+				<option value="False">False</option>
+			</param>
+			<param name="strandSpecific" type="select" label="strand.specific, logical" value="0">
+				<option value="True">True</option>
+				<option value="False">False</option>
+			</param>
+			<param name="replicateIdColumn" type="text"  label="replicate.id.column, character" value=""/>
+			<param name="import" type="select" label="import, logical" value="1">
+				<option value="True">True</option>
+				<option value="False">False</option>
+			</param>
+			<param name="importDefaultDataType" type="text"  label="import.default.data.type, character" value="idat.dir"/>
+			<param name="importTableSeparator" type="text"  label="import.table.separator, character" value=","/>
+			<param name="importBedStyle" type="text"  label="import.bed.style, character" value="BisSNP"/>
+			<param name="importBedColumns" type="text"  label="import.bed.columns, integer vector" value="1,2,3,6,4,5"/>
+			<param name="importBedFrameShift" type="text"  label="import.bed.frame.shift, integer" value="1"/>
+			<param name="importBedTest" type="select" label="import.bed.test, logical" value="1">
+				<option value="True">True</option>
+				<option value="False">False</option>
+			</param>
+			<param name="importBedTestOnly" type="select" label="import.bed.test.only, logical" value="0">
+				<option value="True">True</option>
+				<option value="False">False</option>
+			</param>
+			<param name="importIdatChunkSize" type="text"  label="import.idat.chunk.size, integer" value=""/>
+			<param name="preprocessing" type="select" label="preprocessing, logical" value="1">
+				<option value="True">True</option>
+				<option value="False">False</option>
+			</param>
+			<param name="qc" type="select" label="qc, logical" value="1">
+				<option value="True">True</option>
+				<option value="False">False</option>
+			</param>
+			<param name="qcBoxplots" type="select" label="qc.boxplots, logical" value="1">
+				<option value="True">True</option>
+				<option value="False">False</option>
+			</param>
+			<param name="qcBarplots" type="select" label="qc.barplots, logical" value="1">
+				<option value="True">True</option>
+				<option value="False">False</option>
+			</param>
+			<param name="qcNegativeBoxplot" type="select" label="qc.negative.boxplot, logical" value="1">
+				<option value="True">True</option>
+				<option value="False">False</option>
+			</param>
+			<param name="qcSnpHeatmap" type="select" label="qc.snp.heatmap, logical" value="1">
+				<option value="True">True</option>
+				<option value="False">False</option>
+			</param>
+			<param name="qcSnpDistances" type="select" label="qc.snp.distances, logical" value="1">
+				<option value="True">True</option>
+				<option value="False">False</option>
+			</param>
+			<param name="qcSnpBoxplot" type="select" label="qc.snp.boxplot, logical" value="0">
+				<option value="True">True</option>
+				<option value="False">False</option>
+			</param>
+			<param name="qcSnpBarplot" type="select" label="qc.snp.barplot, logical" value="0">
+				<option value="True">True</option>
+				<option value="False">False</option>
+			</param>
+			<param name="qcCoveragePlots" type="select" label="qc.coverage.plots, logical" value="0">
+				<option value="True">True</option>
+				<option value="False">False</option>
+			</param>
+			<param name="qcCoverageThresholdPlot" type="text"  label="qc.coverage.threshold.plot, integer vector" value="1,2,3,4,5,6,7,8,9,10"/>
+			<param name="qcCoverageHistograms" type="select" label="qc.coverage.histograms, logical" value="1">
+				<option value="True">True</option>
+				<option value="False">False</option>
+			</param>
+			<param name="qcCoverageViolins" type="select" label="qc.coverage.violins, logical" value="1">
+				<option value="True">True</option>
+				<option value="False">False</option>
+			</param>
+			<param name="qcSampleBatchSize" type="text"  label="qc.sample.batch.size, integer" value="500"/>
+			<param name="normalization" type="select" label="normalization, logical" value="0">
+				<option value="True">True</option>
+				<option value="False">False</option>
+			</param>
+			<param name="normalizationMethod" type="text"  label="normalization.method, character" value="swan"/>
+			<param name="normalizationBackgroundMethod" type="text"  label="normalization.background.method, character" value="methylumi.noob"/>
+			<param name="normalizationPlotShifts" type="select" label="normalization.plot.shifts, logical" value="1">
+				<option value="True">True</option>
+				<option value="False">False</option>
+			</param>
+			<param name="filteringWhitelist" type="text"  label="filtering.whitelist, character" value=""/>
+			<param name="filteringBlacklist" type="text"  label="filtering.blacklist, character" value=""/>
+			<param name="filteringContextRemoval" type="text"  label="filtering.context.removal, character vector" value="CC,CAG,CAH,CTG,CTH,Other"/>
+			<param name="filteringSnp" type="text"  label="filtering.snp, character" value="3"/>
+			<param name="filteringSexChromosomesRemoval" type="select" label="filtering.sex.chromosomes.removal, logical" value="0">
+				<option value="True">True</option>
+				<option value="False">False</option>
+			</param>
+			<param name="filteringMissingValueQuantile" type="text"  label="filtering.missing.value.quantile, double" value="1"/>
+			<param name="filteringCoverageThreshold" type="text"  label="filtering.coverage.threshold, integer" value="5"/>
+			<param name="filteringLowCoverageMasking" type="select" label="filtering.low.coverage.masking, logical" value="0">
+				<option value="True">True</option>
+				<option value="False">False</option>
+			</param>
+			<param name="filteringHighCoverageOutliers" type="select" label="filtering.high.coverage.outliers, logical" value="0">
+				<option value="True">True</option>
+				<option value="False">False</option>
+			</param>
+			<param name="filteringGreedycut" type="select" label="filtering.greedycut, logical" value="1">
+				<option value="True">True</option>
+				<option value="False">False</option>
+			</param>
+			<param name="filteringGreedycutPvalueThreshold" type="text"  label="filtering.greedycut.pvalue.threshold, double" value="0.05"/>
+			<param name="filteringGreedycutRcTies" type="text"  label="filtering.greedycut.rc.ties, character" value="row"/>
+			<param name="filteringDeviationThreshold" type="text"  label="filtering.deviation.threshold, double" value="0"/>
+			<param name="inference" type="select" label="inference, logical" value="0">
+				<option value="True">True</option>
+				<option value="False">False</option>
+			</param>
+			<param name="inferenceTargetsSva" type="text"  label="inference.targets.sva, character vector" value=""/>
+			<param name="inferenceReferenceMethylomeColumn" type="text"  label="inference.reference.methylome.column, character" value=""/>
+			<param name="inferenceMaxCellTypeMarkers" type="text"  label="inference.max.cell.type.markers, integer" value="10000"/>
+			<param name="inferenceTopCellTypeMarkers" type="text"  label="inference.top.cell.type.markers, integer" value="500"/>
+			<param name="inferenceSvaNumMethod" type="text"  label="inference.sva.num.method, character" value="leek"/>
+			<param name="exploratory" type="select" label="exploratory, logical" value="1">
+				<option value="True">True</option>
+				<option value="False">False</option>
+			</param>
+			<param name="exploratoryColumns" type="text"  label="exploratory.columns, integer vector" value=""/>
+			<param name="exploratoryTopDimensions" type="text"  label="exploratory.top.dimensions, integer" value="0"/>
+			<param name="exploratoryPrincipalComponents" type="text"  label="exploratory.principal.components, integer" value="8"/>
+			<param name="exploratoryCorrelationPvalueThreshold" type="text"  label="exploratory.correlation.pvalue.threshold, double" value="0.01"/>
+			<param name="exploratoryCorrelationPermutations" type="text"  label="exploratory.correlation.permutations, integer" value="10000"/>
+			<param name="exploratoryCorrelationQc" type="select" label="exploratory.correlation.qc, logical" value="1">
+				<option value="True">True</option>
+				<option value="False">False</option>
+			</param>
+			<param name="exploratoryBetaDistribution" type="select" label="exploratory.beta.distribution, logical" value="1">
+				<option value="True">True</option>
+				<option value="False">False</option>
+			</param>
+			<param name="exploratoryIntersample" type="select" label="exploratory.intersample, logical" value="1">
+				<option value="True">True</option>
+				<option value="False">False</option>
+			</param>
+			<param name="exploratoryDeviationPlots" type="select" label="exploratory.deviation.plots, logical" value="0">
+				<option value="True">True</option>
+				<option value="False">False</option>
+			</param>
+			<param name="exploratoryClustering" type="text"  label="exploratory.clustering, character" value="all"/>
+			<param name="exploratoryClusteringTopSites" type="text"  label="exploratory.clustering.top.sites, integer vector" value="1000"/>
+			<param name="exploratoryRegionProfiles" type="text"  label="exploratory.region.profiles, character vector" value="genes,promoters,cpgislands"/>
+			<param name="differential" type="select" label="differential, logical" value="1">
+				<option value="True">True</option>
+				<option value="False">False</option>
+			</param>
+			<param name="differentialSiteTestMethod" type="text"  label="differential.site.test.method, character" value="limma"/>
+			<param name="differentialPermutations" type="text"  label="differential.permutations, integer" value="0"/>
+			<param name="differentialComparisonColumns" type="text"  label="differential.comparison.columns, integer vector" value=""/>
+			<param name="differentialComparisonColumnsAllPairwise" type="text"  label="differential.comparison.columns.all.pairwise, integer vector" value=""/>
+			<param name="covariateAdjustmentColumns" type="text"  label="covariate.adjustment.columns, integer vector" value=""/>
+			<param name="differentialAdjustmentSva" type="select" label="differential.adjustment.sva, logical" value="1">
+				<option value="True">True</option>
+				<option value="False">False</option>
+			</param>
+			<param name="differentialAdjustmentCelltype" type="select" label="differential.adjustment.celltype, logical" value="1">
+				<option value="True">True</option>
+				<option value="False">False</option>
+			</param>
+			<param name="differentialEnrichment" type="select" label="differential.enrichment, logical" value="0">
+				<option value="True">True</option>
+				<option value="False">False</option>
+			</param>
+			<param name="exportToBed" type="select" label="export.to.bed, logical" value="1">
+				<option value="True">True</option>
+				<option value="False">False</option>
+			</param>
+			<param name="exportToTrackhub" type="text"  label="export.to.trackhub, character vector" value="bigBed,bigWig"/>
+			<param name="exportToCsv" type="select" label="export.to.csv, logical" value="0">
+				<option value="True">True</option>
+				<option value="False">False</option>
+			</param>
+			<param name="exportToEwasher" type="select" label="export.to.ewasher, logical" value="0">
+				<option value="True">True</option>
+				<option value="False">False</option>
+			</param>
+			<param name="exportTypes" type="text"  label="export.types, character vector" value="sites"/>
+			<param name="colorsMeth" type="text"  label="colors.meth, character vector" value="#AD0021,#909090,#39278C"/>
+			<param name="colors3Gradient" type="text"  label="colors.3.gradient, character vector" value="#832424,#FFFFFF,#3A3A98"/>
+			<param name="loggingMemory" type="select" label="logging.memory, logical" value="1">
+				<option value="True">True</option>
+				<option value="False">False</option>
+			</param>
+			<param name="loggingDisk" type="select" label="logging.disk, logical" value="0">
+				<option value="True">True</option>
+				<option value="False">False</option>
+			</param>
+			<param name="loggingExitOnError" type="select" label="logging.exit.on.error, logical" value="0">
+				<option value="True">True</option>
+				<option value="False">False</option>
+			</param>
+			<param name="distributionSubsample" type="text"  label="distribution.subsample, integer" value="1000000"/>
+			<param name="diskDumpBigMatrices" type="select" label="disk.dump.big.matrices, logical" value="0">
+				<option value="True">True</option>
+				<option value="False">False</option>
+			</param>
+			<param name="enforceMemoryManagement" type="select" label="enforce.memory.management, logical" value="0">
+				<option value="True">True</option>
+				<option value="False">False</option>
+			</param>
+			<param name="enforceDestroyDiskDumps" type="select" label="enforce.destroy.disk.dumps, logical" value="0">
+				<option value="True">True</option>
+				<option value="False">False</option>
+			</param>
+ 		</when>
+    </conditional>
+  </inputs>
+  
+  <outputs>
+	<data format="html" name="html_file" label="index.html" />
+  </outputs>
+
+  <!--
+  <tests>
+    <test>
+      <param name="input" value="fa_gc_content_input.fa"/>
+      <output name="out_file1" file="fa_gc_content_output.txt"/>
+    </test>
+  </tests>  -->
+
+  <help>
+	RnBeads is an R-package for comprehensive analysis of Illumina Infinium HumanMethylation450 BeadChip data. It extends previous approaches for this type of data analysis by high throughput capabilities, as well as presenting results in a comprehensive, highly interpretable fashion.
+  </help>
+  
+  <stdio>
+      <exit_code range="3:"   level="fatal"   description="Pipeline error" />
+   </stdio>
+
+</tool>

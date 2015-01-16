@@ -1,0 +1,6 @@
+<tables>
+	<table name="rnbeads_repos" comment_char="#">
+       		<columns>id, name, value</columns>
+        	<file path="tool-data/rnbeads_repos.txt" />
+	</table>
+</tables>
