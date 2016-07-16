@@ -1,5 +1,4 @@
 # rnbeads4galaxy
-----------------
 
 This is a simple implementation of a [Galaxy](http://usegalaxy.org) interface for [RnBeads](http://rnbeads.mpi-inf.mpg.de). 
 The interface allows to run a complete analysis pipeline, equivalently to running `rnb.run.analysis()`.
